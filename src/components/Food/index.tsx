@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FiEdit3, FiTrash } from 'react-icons/fi'
 
 import { Container } from './styles';
-import api from '../../services/api';
+import { api } from '../../services/api';
 
 interface FoodProps {
     food: iFood;
@@ -19,11 +19,11 @@ interface iFood {
     id: string;
 }
 
-export const Food = ({food, handleDelete, handleEditFood}:FoodProps) => {    
+export const Food = ({ food, handleDelete, handleEditFood }: FoodProps) => {
     const { available } = food;
-    const [ isAvailable, setIsAvailable ] = useState<boolean>(available);
+    const [isAvailable, setIsAvailable] = useState<boolean>(available);
 
-    const toggleAvailable = async () => {  
+    const toggleAvailable = async () => {
         await api.put(`/foods/${food.id}`, {
             ...food,
             available: !isAvailable
@@ -32,14 +32,14 @@ export const Food = ({food, handleDelete, handleEditFood}:FoodProps) => {
         setIsAvailable(!isAvailable);
     }
 
-    const setEditingFood = () => {    
+    const setEditingFood = () => {
         handleEditFood(food)
     }
 
     return (
         <Container available={isAvailable}>
             <header>
-                <img src={food.image} alt={food.name}/>
+                <img src={food.image} alt={food.name} />
             </header>
             <section className="body">
                 <h2>{food.name}</h2>
@@ -72,19 +72,19 @@ export const Food = ({food, handleDelete, handleEditFood}:FoodProps) => {
                     <p>{isAvailable ? 'Disponível' : 'Indisponível'}</p>
 
                     <label htmlFor={`available-switch-${food.id}`} className="switch">
-                            <input
-                                id={`available-switch-${food.id}`}
-                                type="checkbox"
-                                checked={isAvailable}
-                                onChange={toggleAvailable}
-                                data-testid={`change-status-food-${food.id}`}
-                            >
-                                <span className="slider" />
-                            </input>
+                        <input
+                            id={`available-switch-${food.id}`}
+                            type="checkbox"
+                            checked={isAvailable}
+                            onChange={toggleAvailable}
+                            data-testid={`change-status-food-${food.id}`}
+                        >
+                            <span className="slider" />
+                        </input>
                     </label>
                 </div>
             </section>
         </Container>
     )
-    
+
 }
