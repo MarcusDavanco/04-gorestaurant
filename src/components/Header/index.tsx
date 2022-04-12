@@ -1,4 +1,3 @@
-import React from 'react';
 import { FiPlusSquare } from 'react-icons/fi';
 
 import { Container } from './styles';
@@ -10,6 +9,7 @@ interface HeaderProps {
 
 export const Header = ({ openModal }: HeaderProps) => {
     return (<Container>
+        <header>
         <img src={Logo} alt="GoRestaurant" />
         <nav>
             <div>
@@ -24,5 +24,6 @@ export const Header = ({ openModal }: HeaderProps) => {
                 </button>
             </div>
         </nav>
+        </header>
     </Container>)
 }

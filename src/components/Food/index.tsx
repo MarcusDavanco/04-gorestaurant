@@ -1,27 +1,26 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FiEdit3, FiTrash } from 'react-icons/fi'
 
 import { Container } from './styles';
 import { api } from '../../services/api';
 
 interface FoodProps {
-    food: iFood;
-    handleDelete: (id: string) => void;
-    handleEditFood: (food: iFood) => void;
+    food: FoodData;
+    handleDelete: (id: number) => Promise<void>;
+    handleEditFood: (food: FoodData) => void;
 }
 
-interface iFood {
-    available: boolean;
-    image: string;
+interface FoodData {
+    id: number;
     name: string;
     description: string;
     price: number;
-    id: string;
+    available: boolean;
+    image: string;
 }
 
-export const Food = ({ food, handleDelete, handleEditFood }: FoodProps) => {
-    const { available } = food;
-    const [isAvailable, setIsAvailable] = useState<boolean>(available);
+export const Food = ({ food, handleDelete, handleEditFood }: FoodProps) => {    
+    const [isAvailable, setIsAvailable] = useState(food.available);
 
     const toggleAvailable = async () => {
         await api.put(`/foods/${food.id}`, {
@@ -78,9 +77,8 @@ export const Food = ({ food, handleDelete, handleEditFood }: FoodProps) => {
                             checked={isAvailable}
                             onChange={toggleAvailable}
                             data-testid={`change-status-food-${food.id}`}
-                        >
-                            <span className="slider" />
-                        </input>
+                        />
+                            <span className="slider" />                        
                     </label>
                 </div>
             </section>
